@@ -1,6 +1,6 @@
 # YoumuLoader
 Created using vue, to send get requests to download videos through a server
-that utilizes via get requests
+that utilizes get requests
 ## Project Setup
 
 ```sh
