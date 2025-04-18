@@ -57,8 +57,6 @@ async function downloadVideo() {
         return
     }
     browser.storage.local.set({ token: tokenRef.value, hostname: hostnameRef.value })
-        .then(() => console.log("Token & hostname saved", tokenRef.value, hostnameRef.value))
-        .catch(e => console.error("token & hostname error", e));
     axios.get(`${hostnameRef.value}youmu/download`, {
         params: {
             video: url,
@@ -68,18 +66,16 @@ async function downloadVideo() {
             Authorization: `MediaBrowser Token="${tokenRef.value}"`
         }
     })
-        .then(response => {
+        .then(() => {
             buttonStatus.value = "Video Downloaded!";
             btn.style.backgroundColor = "green"
             btn.style.borderColor = "green"
             browser.storage.local.set({ lastVideo:  url})
-            console.log(response);
         })
-        .catch(error => {
+        .catch(() => {
             buttonStatus.value = "Something Wrong?";
             btn.style.backgroundColor = "red"
             btn.style.borderColor = "red"
-            console.log(error)
         })
 }
 </script>
