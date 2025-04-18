@@ -1,6 +1,7 @@
 # YoumuLoader
-Created using vue, to send get requests to download videos through a server
+A firefox extension created using vue, to send get requests to download videos through a server
 that utilizes get requests
+
 ## Project Setup
 
 ```sh
