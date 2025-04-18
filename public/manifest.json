@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+    "name": "YoumuLoader",
+    "version": "1.0",
+  
+    "description": "Download videos",
+    "icons": {
+      "64": "De_Youmu.png"
+    },
+
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+
+    "browser_action": {
+      "default_title": "YoumuLoader",
+      "default_popup": "index.html"
+    },
+
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "youmuloader@example.com"
+      }
+    }
+  }
+  
