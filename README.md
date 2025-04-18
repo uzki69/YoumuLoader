@@ -8,21 +8,22 @@ that utilizes get requests
 npm install
 ```
 
-### Compile and Hot-Reload for Development(Not for extension)
-```sh
-npm run dev
-```
+### Compile for Extension using web-ext (zip file)
 
-### Compile and Minify for Production
+```sh
+npm run build
+npm run web
+```
+### Compile and Minify only (debug using manifest)
 
 ```sh
 npm run build
 ```
 
-### Compile for Extension using web-ext
+### Compile and Hot-Reload for Development **(Not for extension)**
 
 ```sh
-npm run web
+npm run dev
 ```
 
 ## Dependencies
