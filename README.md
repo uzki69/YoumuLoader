@@ -1,23 +1,13 @@
 # YoumuLoader
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
+Created using vue, to send get requests to download videos through a server
+that utilizes via get requests
 ## Project Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
+### Compile and Hot-Reload for Development(Not for extension)
 ```sh
 npm run dev
 ```
@@ -27,3 +17,14 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Compile for Extension using web-ext
+
+```sh
+npm run web
+```
+
+## Dependencies
+* Vue
+* Axios
+* Web-ext
