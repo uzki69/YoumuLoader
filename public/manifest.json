@@ -20,7 +20,7 @@
 
     "browser_specific_settings": {
       "gecko": {
-        "id": "youmuloader@example.com"
+        "id": "youmuloader@github.com"
       }
     }
   }
