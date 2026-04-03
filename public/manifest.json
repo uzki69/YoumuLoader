@@ -1,0 +1,32 @@
+   {
+  "manifest_version": 2,
+  "name": "YoumuLoader",
+  "version": "1.0",
+
+  "description": "Needed for downloading youtube videos using a jellyfin plugin",
+
+  "icons": {
+    "64": "De_Youmu.png"
+  },
+
+  "browser_action": {
+    "default_title": "Youmu Loader",
+    "default_popup": "index.html"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youmuloader@github.com",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["borderify.js"]
+    }
+  ]
+}
