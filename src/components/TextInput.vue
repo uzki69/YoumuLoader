@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { InputHTMLAttributes } from 'vue';
+const text = defineModel<string>();
 
 interface TextInput extends /* @vue-ignore */ InputHTMLAttributes{}
 defineProps<TextInput>();
@@ -11,7 +12,7 @@ defineProps<TextInput>();
             <label :for="`textinput_${$attrs.name as string}`" class="label">
                 <slot></slot>
             </label>
-            <input v-bind="$attrs" class="input"  :id="`textinput_${$attrs.name as string}`" type="text">
+            <input v-bind="$attrs" v-model="text" class="input"  :id="`textinput_${$attrs.name as string}`" type="text">
         </div>
     </span>
     </template>
