@@ -1,7 +1,7 @@
 html {
     background-color: #181818;
-    height: 100vh;
-    width: 100vw;
+    /* height: 100%;
+    width: 100%; */
 }
 
 * {
@@ -18,7 +18,7 @@ span {
 
 body {
     
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 40em;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

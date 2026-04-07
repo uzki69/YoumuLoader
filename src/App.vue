@@ -1,50 +1,82 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import ButtonDownload from './components/ButtonDownload.vue';
 import CheckBox from './components/CheckBox.vue';
 import TextInput from './components/TextInput.vue';
 import VideoThumb from './components/VideoThumb.vue';
 import * as api from '@/lib/api'
-import * as type from "@/lib/type"
-const audioChecked = ref<boolean>(false);
-const playlistChecked = ref<boolean>(false);
-const hostname = ref('');
-const token = ref('');
-const downloadState = ref(type.DownloadState.NORMAL);
-const thumb = ref('');
-const video_url = ref('');
+import { DownloadState, YoumuCodes, YoumuError, type AppData } from './lib/type';
+// const audioChecked = ref<boolean>(false);
+// const playlistChecked = ref<boolean>(false);
+// const hostname = ref('');
+// const token = ref('');
+// const downloadState = ref(type.DownloadState.NORMAL);
+// const thumb = ref('');
+// const video_url = ref('');
+
+const app_data: AppData = reactive<AppData>({
+  audio: false,
+  playlist: false,
+  hostname: '',
+  downloadState: DownloadState.NORMAL,
+  thumb_url: '',
+  token: '',
+  video_url: ''
+})
+
+
 
 onMounted(async () => {
   const video = await api.getVideoData();
-  if (video) {
-    thumb.value = video.thumb;
-    video_url.value = video.url;
+
+  if (video instanceof YoumuError) {
+    console.error(video);
+    return;
   }
+
+  app_data.video_url = video.video_url;
+  app_data.thumb_url = video.thumb_url
+
+  const data = api.getItem();
+
+  if (data instanceof YoumuError) {
+    return;
+  }
+
+  app_data.hostname = data.hostname
+  app_data.token = data.token
+  app_data.playlist = data.playlist
+  app_data.audio = data.audio
 })
 
-function setItem() {
-  api.setItem({
-    hostname: hostname.value,
-    token: token.value,
-    audio: audioChecked.value,
-    playlist: playlistChecked.value
-  })
-}
-
 async function handleDownloadButton() {
-  setItem();
-  if (!data) {
-    downloadState.value = type.DownloadState.BAD;
+  const handle = api.downloadVideo(app_data, app_data.video_url);
+  app_data.downloadState = DownloadState.WAITING;
+  api.setItem(app_data);
+  const error = await handle;
+
+  if (error instanceof YoumuError) {
+    switch (error.code) {
+      case YoumuCodes.FETCH_NOT_OK:
+      default:
+        app_data.downloadState = DownloadState.BAD;
+    }
     return;
   }
 
-  const res = await api.downloadVideo(data, video_url.value);
-  if (res.ok) {
-    downloadState.value = type.DownloadState.GOOD;
-    return;
-  }
-  downloadState.value = type.DownloadState.BAD;
+  app_data.downloadState = DownloadState.GOOD;
 }
+
+
+const buttonMessage = computed(() => {
+  const map: Record<DownloadState, string> = {
+    [DownloadState.BAD] : "Failed to download",
+    [DownloadState.GOOD] : "Downloaded",
+    [DownloadState.NORMAL]: "Download video",
+    [DownloadState.WAITING]: "Waiting..."
+  }
+  return map[app_data.downloadState];
+})
 
 
 </script>
@@ -52,32 +84,32 @@ async function handleDownloadButton() {
 <template>
   <div class="container">
     <!-- host -->
-    <TextInput v-model="hostname" placeholder="https://www.example.com/" name="hostname">Hostname:</TextInput>
+    <TextInput class="text-input" v-model="app_data.hostname" placeholder="https://www.example.com/" name="hostname">Hostname:</TextInput>
     <!-- jellyfin token -->
-    <TextInput v-model="token" name="token">Token:</TextInput>
+    <TextInput type="password" class="text-input" v-model="app_data.token" name="token">Token:</TextInput>
     <div class="checkbox">
-      <CheckBox v-model="playlistChecked">Playlist</CheckBox>
-      <CheckBox v-model="audioChecked">Audio Only</CheckBox>
+      <CheckBox v-model="app_data.playlist">Playlist</CheckBox>
+      <CheckBox v-model="app_data.audio">Audio Only</CheckBox>
     </div>
-    <VideoThumb :src="thumb" />
+    <VideoThumb :src="app_data.thumb_url" />
 
-    <ButtonDownload :state="downloadState" class="button-download" @click="handleDownloadButton">
-      Download video
-    </ButtonDownload >
+    <ButtonDownload :state="app_data.downloadState" class="button-download" @click="handleDownloadButton">
+      {{ buttonMessage }}
+    </ButtonDownload>
   </div>
 </template>
 
 <style scoped>
 .container {
-  max-width: 80vw;
   display: flex;
-  overflow: hidden;
   justify-content: center;
   flex-direction: column;
 }
 
 .button-download {
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  width: 100%;
+  height: 5em;
 }
 
 
@@ -85,7 +117,11 @@ async function handleDownloadButton() {
   display: flex;
   align-items: center;
   column-gap: 16px;
-  justify-content: center;
+  justify-content: start;
   padding: 1ch;
+}
+
+.text-input {
+  max-width: 80%;
 }
 </style>

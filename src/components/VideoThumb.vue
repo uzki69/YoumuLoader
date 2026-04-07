@@ -17,7 +17,8 @@ span {
 }
 img {
   width: 90% ;
-  height: auto;
+  object-fit: contain;
+  max-height: 20em; 
   padding: 8px;
 }
 </style>

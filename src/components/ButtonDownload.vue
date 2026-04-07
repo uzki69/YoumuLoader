@@ -21,12 +21,9 @@ const color = computed(() => {
 </script>
 
 <template>
-    <!-- span to prevent parent class css -->
-    <span>
-        <button v-bind="$attrs" :class="color" >
-            <slot></slot>
-        </button>
-    </span>
+    <button v-bind="$attrs" :class="color">
+        <slot></slot>
+    </button>
 </template>
 
 <style scoped>
@@ -36,6 +33,8 @@ button {
     border: 1px solid #181818;
     padding: 0.7em;
     text-shadow: 1px 1px 2px #181818;
+    width: inherit;
+    height: inherit;
 }
 
 .normal_button_color {

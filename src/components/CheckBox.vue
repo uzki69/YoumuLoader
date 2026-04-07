@@ -6,7 +6,7 @@ const checked = defineModel<boolean>();
 </script>
 
 <template>
-<span @click="checked=!checked">
+    <span @click="checked=!checked">
         <div>
             <SmallCheck v-if="checked" class="check_small"/>
         </div>

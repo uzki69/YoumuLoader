@@ -6,13 +6,18 @@
   "description": "Needed for downloading youtube videos using a jellyfin plugin",
 
   "icons": {
-    "64": "De_Youmu.png"
+    "64": "favicon.ico"
   },
 
   "browser_action": {
     "default_title": "Youmu Loader",
     "default_popup": "index.html"
   },
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
 
   "browser_specific_settings": {
     "gecko": {
@@ -21,12 +26,5 @@
         "required": ["none"]
       }
     }
-  },
-
-  "content_scripts": [
-    {
-      "matches": ["*://*.youtube.com/*"],
-      "js": ["borderify.js"]
-    }
-  ]
+  }
 }
