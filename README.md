@@ -1,4 +1,14 @@
 # YoumuLoader
+For building the extension is only necessary this
+(tested on - npm: 11.6.2, node: v25.2.1)
+
+```sh
+    npm install
+    npm run ext
+```
+
+
+
 
 This template should help get you started developing with Vue 3 in Vite.
 
