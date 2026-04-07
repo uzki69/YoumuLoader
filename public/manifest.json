@@ -1,12 +1,12 @@
    {
   "manifest_version": 2,
   "name": "YoumuLoader",
-  "version": "1.0",
+  "version": "1.1.1",
 
   "description": "Needed for downloading youtube videos using a jellyfin plugin",
 
   "icons": {
-    "64": "favicon.ico"
+    "64": "favicon.png"
   },
 
   "browser_action": {
